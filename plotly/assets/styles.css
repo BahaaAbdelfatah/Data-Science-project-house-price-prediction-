@@ -1,0 +1,262 @@
+/* Z-index for calendar pop-up to prevent interference */
+/* Using an extremely high value to ensure it's on top of almost everything, especially elements with transform on hover */
+.DayPicker_transitionContainer {
+    z-index: 999999 !important; /* Even higher value */
+    position: relative !important; /* Ensure a stacking context */
+}
+
+.DayPicker {
+    z-index: 999999 !important; /* Even higher value */
+    position: relative !important; /* Ensure a stacking context */
+}
+
+/* This class is typically used by react-datepicker, but sometimes dcc.DatePickerRange might use an underlying portal */
+.react-datepicker__portal {
+    z-index: 999999 !important; /* Even higher value */
+}
+
+/* Ensure that the container the date picker is within also helps establish a stacking context */
+/* This targets the immediate parent div that wraps the DatePickerRange component in the layout */
+/* If your DatePickerRange is directly inside a dbc.CardBody, this might be effective. */
+.dash-date-picker-range {
+    z-index: 999998 !important; /* Slightly lower but still very high */
+    position: relative !important;
+}
+
+/* Also apply to the main dropdown menu outer container for robustness, but slightly lower than calendar */
+.Select-menu-outer {
+    z-index: 999997 !important; /* High enough for dropdowns, but below calendar */
+}
+
+
+/* General Body and Container Styles */
+body {
+    background-color: #f0f2f5; /* A slightly softer background than f8f9fa */
+    color: #343a40; /* Dark text for general body */
+    font-family: 'Arial', sans-serif; /* Consistent font */
+}
+
+.dbc-container-fluid {
+    background-color: #f0f2f5; /* Ensure container also matches body background */
+    padding-top: 20px; /* Add some padding to the top */
+    padding-bottom: 30px; /* Add some padding to the bottom */
+}
+
+/* Card Styles */
+.dbc-card {
+    background-color: #ffffff; /* White background for cards */
+    border: 1px solid #e0e0e0; /* Light border for cards */
+    border-radius: 10px; /* Slightly more rounded corners for cards */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08); /* A bit more pronounced shadow for depth */
+    margin-bottom: 1.5rem; /* Spacing between cards/rows */
+    transition: transform 0.2s ease-in-out; /* Smooth hover effect */
+    /* The transform on hover effect that caused the issue has been removed */
+}
+
+.dbc-card-header {
+    background-color: #e9ecef; /* Light grey header for cards */
+    color: #343a40; /* Dark text for header */
+    border-bottom: 1px solid #dee2e6; /* Light border at bottom of header */
+    padding: 0.85rem 1.25rem; /* Adjust padding slightly */
+    border-top-left-radius: 9px; /* Match card border-radius -1px */
+    border-top-right-radius: 9px;
+    font-weight: bold; /* Make header text bolder */
+}
+
+.dbc-card-body {
+    padding: 1.5rem; /* Slightly more padding for content */
+}
+
+/* Text and Headings */
+h1, h2, h3, h4, h5, h6 {
+    color: #343a40; /* Ensure all headings use a dark color */
+    font-weight: 600; /* Slightly bolder headings */
+}
+
+.text-primary {
+    color: #007bff !important;
+}
+.text-secondary {
+    color: #6c757d !important; /* Slightly softer secondary text */
+}
+.text-success {
+    color: #28a745 !important;
+}
+.text-info {
+    color: #17a2b8 !important;
+}
+.text-warning {
+    color: #fd7e14 !important; /* Changed from default Bootstrap yellow for better contrast */
+}
+.text-danger {
+    color: #dc3545 !important;
+}
+
+/* Dropdown and Input Styles (to override Bootstrap/Dash defaults if needed) */
+.dash-dropdown .Select-control {
+    border-color: #ced4da !important;
+    box-shadow: none !important;
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+.dash-dropdown .Select-control:hover {
+    border-color: #80bdff !important;
+}
+.dash-dropdown .Select-control.is-focused {
+    border-color: #80bdff !important;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25) !important;
+}
+
+.form-control { /* For dcc.Input */
+    border-color: #ced4da !important;
+    box-shadow: none !important;
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+.form-control:focus {
+    border-color: #80bdff !important;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25) !important;
+}
+
+/* DatePickerRange styling (more specific overrides and z-index) */
+.DateInput_input {
+    border: 1px solid #ced4da !important;
+    border-radius: 0.25rem !important;
+    padding: 0.375rem 0.75rem !important;
+    font-size: 1rem !important;
+    height: calc(2.25rem + 2px) !important; /* Match typical input height */
+}
+.DateInput_input__focused {
+    border-color: #80bdff !important;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25) !important;
+}
+.DateRangePickerInput_arrow_svg {
+    fill: #6c757d !important;
+}
+
+/* Calendar styling for selected range (light green) and selected dates (green) */
+.CalendarDay__default, .CalendarDay__default:hover {
+    background-color: #ffffff !important;
+    color: #343a40 !important;
+    border: 1px solid #e0e0e0 !important;
+    /* Added transition for smooth color changes */
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+/* General selected dates (like single selections, or if start/end aren't specifically styled) */
+.CalendarDay__selected, .CalendarDay__selected:hover {
+    background-color: #198754 !important; /* Bootstrap Green */
+    color: white !important;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+/* Start date of the range - Solid green with a subtle white outer glow */
+.CalendarDay__selected_start {
+    background-color: #198754 !important; /* Bootstrap Green */
+    color: white !important;
+    /* Added subtle outer shadow for differentiation */
+    box-shadow: 0 0 0 2px #198754, 0 0 0 4px rgba(255, 255, 255, 0.5); /* Inner green, outer semi-transparent white */
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+/* End date of the range - Solid green with a distinct orange/gold border and glow */
+.CalendarDay__selected_end {
+    background-color: #198754 !important; /* Bootstrap Green */
+    color: white !important;
+    /* Distinctive border for the end date */
+    border: 2px solid #fd7e14 !important; /* Using Bootstrap orange/warning color */
+    box-shadow: 0 0 0 2px #198754, 0 0 0 4px #fd7e14; /* Inner green, outer orange */
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, border 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+/* Days within the selected range and hovered dates within a potential range */
+.CalendarDay__hovered_span:hover, .CalendarDay__hovered_span {
+    background-color: #d1e7dd !important; /* Light Green for range fill */
+    color: #495057 !important; /* Dark text for light background */
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+/* Ensure the text color is consistent for selected days */
+.CalendarDay__selected span,
+.CalendarDay__selected_start span,
+.CalendarDay__selected_end span {
+    color: white !important;
+}
+.CalendarDay__hovered_span span {
+    color: #495057 !important;
+}
+
+
+.DayPickerNavigation_button__default {
+    background-color: #e9ecef !important;
+    color: #343a40 !important;
+    border: none;
+}
+.DayPickerNavigation_button__default:hover {
+    background-color: #d6d8db !important;
+}
+
+
+/* Dash Table styling to match the theme */
+.dash-spreadsheet-table {
+    background-color: #ffffff !important;
+    border: 1px solid #dee2e6 !important;
+    border-radius: 8px; /* Match card border radius */
+    overflow: hidden; /* Ensures border-radius applies to table */
+}
+.dash-spreadsheet-table th {
+    background-color: #e9ecef !important;
+    color: #343a40 !important;
+    font-weight: bold;
+    border-bottom: 1px solid #dee2e6 !important;
+    border-top: none !important;
+    padding: 12px 10px; /* Slightly more padding */
+}
+.dash-spreadsheet-table td {
+    background-color: #ffffff !important;
+    color: #495057 !important;
+    border-bottom: 1px solid #e0e0e0 !important;
+    padding: 10px;
+}
+.dash-spreadsheet-table tbody tr:nth-child(odd) {
+    background-color: #f9fbfd !important; /* Very light subtle stripe */
+}
+
+/* Button Styling */
+.btn-primary {
+    background-color: #007bff !important;
+    border-color: #007bff !important;
+    transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+}
+.btn-primary:hover {
+    background-color: #0056b3 !important;
+    border-color: #0056b3 !important;
+    transform: translateY(-1px); /* Slight press effect */
+}
+
+/* Section Toggle Buttons */
+.section-toggle-button {
+    width: 100%; /* Make them full width */
+    font-size: 1.1em;
+    padding: 12px 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Upload Component Specific Styling */
+.upload-component {
+    border: 3px dashed #007bff !important;
+    background-color: #f0f8ff !important; /* Very light blue background */
+    color: #007bff !important;
+    border-radius: 12px;
+    padding: 40px; /* Increased padding */
+}
+.upload-component:hover {
+    background-color: #e6f2ff !important; /* Lighter blue on hover */
+    border-color: #0056b3 !important;
+    cursor: pointer;
+}
+.upload-component .bi-cloud-arrow-up-fill {
+    font-size: 3em; /* Larger icon */
+    margin-bottom: 10px;
+}
+.upload-component a {
+    text-decoration: none; /* Remove underline from link */
+    font-weight: bold;
+}
+.upload-component a:hover {
+    text-decoration: underline; /* Add underline on hover */
+}
